@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="pSvetofor.UControls.uFaceLamp"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:pSvetofor.UControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="65" d:DesignWidth="65"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Viewbox>
+
+            <Grid>
+                <Path Data="M87.99 22.56c-1.48,-3.64 -5.31,-10.08 -7.22,-12 -8.97,-8.97 -17,-4.03 
+                            -29.87,0.63 -26.6,9.62 -37.09,43.51 -40.03,75.49 -5.17,56.22 30.76,90.33 
+                            81.62,87.73 23.98,-1.22 47.71,-7.99 61.74,-24.3 12.06,-14.02 19.67,-30.09 
+                            18.68,-49.26 -0.08,-1.53 -0.48,-7.37 -1.02,-9.06 -0.13,-0.4 -29.75,-1.19 
+                            -52.15,-18.19 -3.64,-2.76 -9.48,-8.97 -12.51,-12.77 -10.54,-13.26 -11.79,-20.01 
+                            -19.24,-38.27z" Fill="{Binding LampColor}">
+
+                </Path>
+
+                <!--<TextBlock Text="{Binding S7Operand}" 
+                           FontSize="30"
+                           Foreground="White"
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center"/>-->
+
+            </Grid>
+            
+         
+        </Viewbox>
+    </Grid>
+</UserControl>

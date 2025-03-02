@@ -1,0 +1,231 @@
+﻿<Window x:Class="pSvetofor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:uc="clr-namespace:pSvetofor.UControls"
+        xmlns:vm="clr-namespace:pSvetofor.ViewModel"
+        xmlns:local="clr-namespace:pSvetofor"
+        xmlns:convert="clr-namespace:pSvetofor.Converters"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Style="{StaticResource VS2012WindowStyle}"
+        Title="Simatic PlcSim - Светофор" Height="480" Width="644">
+        <Window.DataContext>
+            <vm:MainViewModel/>
+        </Window.DataContext>
+
+        <Window.Resources>
+
+        <convert:LampConverter x:Key="lampConverter" />
+
+        <Style x:Key="btcConn" TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border BorderBrush="Gray"
+                                    BorderThickness="3"
+                                    Background="#FFABABAB">
+
+                            <Grid>
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"
+                                                  Content="{TemplateBinding Content}"/>
+
+                                <Ellipse Width="20"
+                                         Height="20"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Right"
+                                         Fill="{Binding IsConnect, Converter={StaticResource lampConverter}}"/>
+
+                            </Grid>
+
+                              
+
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Opacity" Value="0.7"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Window.Resources>
+
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+
+        <Canvas Margin="0">
+
+            <Image Source="/Images/svetofor.png" 
+                   HorizontalAlignment="Center" 
+            Height="424" 
+            VerticalAlignment="Top" />
+
+            <!--ФАС - КРАСНАЯ ЛАМПА-->
+            <uc:uFaceLamp S7Operand="Q0.0"
+                   LampActiveColor="#FFE50011"
+                   Height="71"  
+                   Width="86"
+                   Canvas.Top="71.5" 
+                   Canvas.Left="32.633" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Top" />
+
+            <!--ФАС - ЖЕЛТАЯ ЛАМПА-->
+            <uc:uFaceLamp S7Operand="Q0.1"
+                   LampActiveColor="#FFF7C800"
+                   Height="71" 
+                   Canvas.Top="150" 
+                   Width="86" 
+                   Canvas.Left="32.633" 
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+            <!--ФАС - ЗЕЛЕНАЯ ЛАМПА-->
+            <uc:uFaceLamp S7Operand="Q0.2"
+                   LampActiveColor="#FF00B768"
+                   Height="71" 
+                   Canvas.Top="234" 
+                   Width="86" 
+                   Canvas.Left="32.633" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"/>
+
+            <!--ПРОФИЛЬ - КРАСНАЯ ЛАМПА-->
+            <uc:uProfileLamp S7Operand="Q1.0"
+          LampActiveColor="#FFE50011"
+          Height="45"  
+          Width="40"
+          Canvas.Top="114.252" 
+          Canvas.Left="161.971" 
+          HorizontalAlignment="Center" 
+          VerticalAlignment="Center" />
+
+            <!--ПРОФИЛЬ - ЖЕЛТАЯ ЛАМПА-->
+            <uc:uProfileLamp S7Operand="Q1.1"
+         LampActiveColor="#FFF7C800"
+         Height="44" 
+         Canvas.Top="184" 
+         Width="48" 
+         Canvas.Left="155.634" 
+         HorizontalAlignment="Center"
+         VerticalAlignment="Center"/>
+
+            <!--ПРОФИЛЬ - ЗЕЛЕНАЯ ЛАМПА-->
+            <uc:uProfileLamp S7Operand="Q1.2"
+         LampActiveColor="#FF00B768"
+         Height="42" 
+         Canvas.Top="261.333" 
+         Width="79" 
+         Canvas.Left="142.633" 
+         HorizontalAlignment="Center" 
+         VerticalAlignment="Top"/>
+
+
+
+        </Canvas>
+        <Grid Grid.Column="1">
+                <StackPanel>
+
+                    <Button Content="Подключиться к Simatic PlcSim"
+                        Command="{Binding ConnectPlcSim_Command}"
+                            Style="{StaticResource btcConn}"
+                        Cursor="Hand"
+                        Margin="10"
+                        Height="30" Background="#FF949494"/>
+
+                    <Grid Margin="10,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock>Красный с лицевой стороны:</TextBlock>
+                        <TextBlock Grid.Column="1">Q0.0</TextBlock>
+
+                    </Grid>
+
+
+                    <Grid Margin="10,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock>Желтый с лицевой стороны:</TextBlock>
+                        <TextBlock Grid.Column="1">Q0.1</TextBlock>
+
+                    </Grid>
+
+                    <Grid Margin="10,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock>Зеленый с лицевой стороны:</TextBlock>
+                        <TextBlock Grid.Column="1">Q0.2</TextBlock>
+
+                    </Grid>
+
+                    <Grid Height="10"/>
+
+                    <Grid Margin="10,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock>Красный с боковой стороны:</TextBlock>
+                        <TextBlock Grid.Column="1">Q1.0</TextBlock>
+
+                    </Grid>
+
+                    <Grid Margin="10,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock>Желтый с боковой стороны:</TextBlock>
+                        <TextBlock Grid.Column="1">Q1.1</TextBlock>
+
+                    </Grid>
+
+                    <Grid Margin="10,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock>Зеленый с боковой стороны:</TextBlock>
+                        <TextBlock Grid.Column="1">Q1.2</TextBlock>
+
+                    </Grid>
+
+
+
+                </StackPanel>
+
+            </Grid>
+
+        </Grid>
+
+
+    
+
+</Window>
